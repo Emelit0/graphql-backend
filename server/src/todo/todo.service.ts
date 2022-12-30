@@ -6,23 +6,28 @@ import { UpdateTodoInput } from './dto/update-todo.input';
 @Injectable()
 export class TodoService {
   constructor(private prisma: PrismaService) {}
-  create(createTodoInput: CreateTodoInput) {
-    return this.prisma.todo.create({});
+  async create(createTodoInput: CreateTodoInput) {
+    return await this.prisma.todo.create({
+      data: { title: createTodoInput.title },
+    });
   }
 
   findAll() {
-    return `This action returns all todo`;
+    return this.prisma.todo.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} todo`;
+    return this.prisma.todo.findUnique({ where: { id } });
   }
 
   update(id: number, updateTodoInput: UpdateTodoInput) {
-    return `This action updates a #${id} todo`;
+    return this.prisma.todo.update({
+      where: { id },
+      data: { title: updateTodoInput.title },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} todo`;
+    return this.prisma.todo.delete({ where: { id } });
   }
 }
