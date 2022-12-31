@@ -2,17 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Auth {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateAuthInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreateTodoInput {
   title: String!
 }
 
 type Mutation {
+  createAuth(createAuthInput: CreateAuthInput!): Auth!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
+  removeAuth(id: Int!): Auth!
   removeTodo(id: Int!): Todo!
+  updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
 }
 
 type Query {
+  auth(id: Int!): Auth!
   todo(id: Int!): Todo!
   todos: [Todo!]!
 }
@@ -20,6 +34,12 @@ type Query {
 type Todo {
   id: Int!
   title: String!
+}
+
+input UpdateAuthInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateTodoInput {
