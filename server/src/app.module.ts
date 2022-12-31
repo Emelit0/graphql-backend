@@ -5,6 +5,7 @@ import { join } from 'path';
 import { TodoModule } from './todo/todo.module';
 import { PrismaService } from './prisma/prisma.service';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     TodoModule,
     AuthModule,
+    UserModule,
   ],
   providers: [PrismaService],
 })

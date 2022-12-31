@@ -7,17 +7,12 @@ type Auth {
   exampleField: Int!
 }
 
-input CreateAuthInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input CreateTodoInput {
   title: String!
 }
 
 type Mutation {
-  createAuth(createAuthInput: CreateAuthInput!): Auth!
+  createAuth(signUpInput: SignupInput!): Auth!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   removeAuth(id: Int!): Auth!
   removeTodo(id: Int!): Todo!
@@ -31,15 +26,22 @@ type Query {
   todos: [Todo!]!
 }
 
+input SignupInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
 type Todo {
   id: Int!
   title: String!
 }
 
 input UpdateAuthInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  email: String
   id: Int!
+  password: String
+  username: String
 }
 
 input UpdateTodoInput {
