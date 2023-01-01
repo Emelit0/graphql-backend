@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { SignupInput } from './dto/signup-input';
 import { UpdateAuthInput } from './dto/update-auth.input';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import * as argon from 'argon2';
 
 @Injectable()
 export class AuthService {
-  create(signUpInput: SignupInput) {
-    return 'This action adds a new auth';
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+    configService: ConfigService,
+  ) {}
+  async signup(signUpInput: SignupInput) {
+    const hashedPassword = await argon.hash(signUpInput.password);
+    const user = await this.prisma.user.create({});
   }
 
   findAll() {

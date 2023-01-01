@@ -12,10 +12,10 @@ input CreateTodoInput {
 }
 
 type Mutation {
-  createAuth(signUpInput: SignupInput!): Auth!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
   removeAuth(id: Int!): Auth!
   removeTodo(id: Int!): Todo!
+  signUp(signUpInput: SignupInput!): SignResponse!
   updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
   updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
 }
@@ -24,6 +24,12 @@ type Query {
   auth(id: Int!): Auth!
   todo(id: Int!): Todo!
   todos: [Todo!]!
+}
+
+type SignResponse {
+  accesToken: String!
+  refreshToken: String!
+  user: User!
 }
 
 input SignupInput {
@@ -47,4 +53,10 @@ input UpdateAuthInput {
 input UpdateTodoInput {
   id: Int!
   title: String!
+}
+
+type User {
+  email: String!
+  id: Int!
+  username: String!
 }
