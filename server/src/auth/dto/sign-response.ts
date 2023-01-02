@@ -9,9 +9,13 @@ export class SignResponse {
   @Field()
   accesToken: string;
 
+  @IsNotEmpty()
+  @IsString()
   @Field()
   refreshToken: string;
 
+  @IsNotEmpty()
+  @IsString()
   @Field(() => User)
   user: User;
 }
