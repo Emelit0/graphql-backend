@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SignupInput } from './dto/signup-input';
 import { UpdateAuthInput } from './dto/update-auth.input';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon from 'argon2';
+import { SignInInput } from './dto/signInInput';
 
 @Injectable()
 export class AuthService {
@@ -30,8 +31,29 @@ export class AuthService {
     return { accesToken, refreshToken, user };
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async signIn(signInInput: SignInInput) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: signInInput.email },
+    });
+    if (!user) {
+      throw new ForbiddenException('Access Denied');
+    }
+    const doPasswordsMatch = await argon.verify(
+      user.hashedPassword,
+      signInInput.password,
+    );
+
+    if (!doPasswordsMatch) {
+      throw new ForbiddenException('Access Denied');
+    }
+
+    const { accesToken, refreshToken } = await this.createTokens(
+      user.id,
+      user.email,
+    );
+    await this.updateRefreshToken(user.id, refreshToken);
+
+    return { accesToken, refreshToken, user };
   }
 
   findOne(id: number) {
