@@ -5,6 +5,7 @@ import { SignupInput } from './dto/signup-input';
 import { UpdateAuthInput } from './dto/update-auth.input';
 import { SignResponse } from './dto/sign-response';
 import { SignInInput } from './dto/signInInput';
+import { LogoutResponse } from './dto/logoutResponse';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -33,5 +34,10 @@ export class AuthResolver {
   @Mutation(() => Auth)
   removeAuth(@Args('id', { type: () => Int }) id: number) {
     return this.authService.remove(id);
+  }
+
+  @Mutation(() => LogoutResponse)
+  logout(@Args('id', { type: () => Int }) id: number) {
+    return this.authService.logout(id);
   }
 }

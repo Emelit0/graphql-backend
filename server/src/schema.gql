@@ -11,8 +11,13 @@ input CreateTodoInput {
   title: String!
 }
 
+type LogoutResponse {
+  loggedOut: Boolean!
+}
+
 type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
+  logout(id: Int!): LogoutResponse!
   removeAuth(id: Int!): Auth!
   removeTodo(id: Int!): Todo!
   signIn(signUpInput: SignInInput!): SignResponse!
